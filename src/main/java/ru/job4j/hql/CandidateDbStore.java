@@ -47,7 +47,9 @@ public class CandidateDbStore {
     public void findByName(String name) {
         Query query = session.createQuery("from Candidate where name = :fName");
         query.setParameter("fName", name);
-        System.out.println(query.setMaxResults(1).getSingleResult());
+        for (Object candidate : query.getResultList()) {
+            System.out.println(candidate);
+        }
     }
 
     public void update() {

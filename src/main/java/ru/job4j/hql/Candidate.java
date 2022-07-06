@@ -67,15 +67,12 @@ public class Candidate {
             return false;
         }
         Candidate candidate = (Candidate) o;
-        return id == candidate.id
-                && experience == candidate.experience
-                && salary == candidate.salary
-                && Objects.equals(name, candidate.name);
+        return id == candidate.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, experience, salary);
+        return Objects.hash(id);
     }
 
     @Override
