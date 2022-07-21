@@ -13,9 +13,11 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
 
+        <mapping class="ru.job4j.lazy.Model" />
+        <mapping class="ru.job4j.lazy.Mark" />
         <mapping class="ru.job4j.many.Author" />
         <mapping class="ru.job4j.many.Book" />
         <mapping class="ru.job4j.many.CarModel" />
