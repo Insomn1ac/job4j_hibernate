@@ -13,7 +13,7 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
 
         <mapping class="ru.job4j.lazy.Model" />
@@ -23,5 +23,7 @@
         <mapping class="ru.job4j.many.CarModel" />
         <mapping class="ru.job4j.many.CarBrand" />
         <mapping class="ru.job4j.hql.Candidate" />
+        <mapping class="ru.job4j.hql.Vacancy" />
+        <mapping class="ru.job4j.hql.VacanciesBase" />
     </session-factory>
 </hibernate-configuration>

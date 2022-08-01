@@ -2,7 +2,6 @@ package ru.job4j.hql;
 
 import org.hibernate.Session;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HbmRun {
@@ -12,28 +11,33 @@ public class HbmRun {
         STORE.init();
         Session session = STORE.getSession();
         session.beginTransaction();
-        List<Candidate> candidates = addInDb(session);
-        STORE.findAll();
-        STORE.findById(candidates.get(1).getId());
-        STORE.findByName(candidates.get(2).getName());
-        STORE.update();
-        STORE.delete(candidates.get(0).getId());
+        List<Candidate> candidates = session.createQuery("select distinct c from Candidate c "
+                        + "join fetch c.vacanciesBase v "
+                        + "join fetch v.vacancies ", Candidate.class)
+                .getResultList();
         session.getTransaction().commit();
         session.close();
+        candidates.forEach(System.out::println);
         STORE.destroy();
     }
 
-    private static List<Candidate> addInDb(Session session) {
-        Candidate one = new Candidate("Ivan", 5, 20000);
-        Candidate two = new Candidate("Alexey", 3, 15000);
-        Candidate three = new Candidate("Marina", 4, 16000);
-        List<Candidate> candidateList = new ArrayList<>();
-        candidateList.add(one);
-        candidateList.add(two);
-        candidateList.add(three);
+    private static void addInDb(Session session) {
+        List<Vacancy> vacancies = List.of(
+                new Vacancy("Developer"),
+                new Vacancy("HR"),
+                new Vacancy("Sales")
+        );
+        vacancies.forEach(session::save);
+        VacanciesBase base = new VacanciesBase();
+        base.addVacancy(session.load(Vacancy.class, 1));
+        base.addVacancy(session.load(Vacancy.class, 2));
+        base.addVacancy(session.load(Vacancy.class, 3));
+        session.save(base);
+        Candidate one = new Candidate("Ivan", 5, 20000, base);
+        Candidate two = new Candidate("Alexey", 3, 15000, base);
+        Candidate three = new Candidate("Marina", 4, 16000, base);
         session.save(one);
         session.save(two);
         session.save(three);
-        return candidateList;
     }
 }

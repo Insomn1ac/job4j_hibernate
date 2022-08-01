@@ -16,10 +16,14 @@ public class Candidate {
 
     private int salary;
 
-    public Candidate(String name, int experience, int salary) {
+    @OneToOne(fetch = FetchType.LAZY)
+    private VacanciesBase vacanciesBase;
+
+    public Candidate(String name, int experience, int salary, VacanciesBase vacanciesBase) {
         this.name = name;
         this.experience = experience;
         this.salary = salary;
+        this.vacanciesBase = vacanciesBase;
     }
 
     public Candidate() {
@@ -58,6 +62,14 @@ public class Candidate {
         this.salary = salary;
     }
 
+    public VacanciesBase getVacanciesBase() {
+        return vacanciesBase;
+    }
+
+    public void setVacanciesBase(VacanciesBase vacanciesBase) {
+        this.vacanciesBase = vacanciesBase;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -82,6 +94,7 @@ public class Candidate {
                 + ", name='" + name + '\''
                 + ", experience=" + experience
                 + ", salary=" + salary
+                + ", vacanciesBase=" + vacanciesBase
                 + '}';
     }
 }
